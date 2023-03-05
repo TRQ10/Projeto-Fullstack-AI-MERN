@@ -27,7 +27,7 @@ export default function Reset() {
   
         <Toaster position='top-center' reverseOrder={false}></Toaster>
   
-        <div className='flex justify-center items-center h-screen'>
+        <div className='flex justify-center items-center'>
           <div className={styles.glass} style={{width: '50%'}}>
   
             <div className="title flex flex-col items-center">
