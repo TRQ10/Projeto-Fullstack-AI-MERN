@@ -1,22 +1,22 @@
 import toast from 'react-hot-toast'
 
-/** validate login page username */
+/** validar login do usuario */
 export async function usernameValidate(values){
     const errors = usernameVerify({}, values);
 
     return errors;
 }
 
-/** validate password */
+/** validar senha */
 export async function passwordValidate(values){
     const errors = passwordVerify({}, values);
 
     return errors;
 }
 
-/** validate password */
+/** validar senha */
 function passwordVerify(errors = {}, values){
-    /* eslint-disable no-useless-escape */
+
     const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
 
     if(!values.password){
@@ -32,7 +32,7 @@ function passwordVerify(errors = {}, values){
     return errors;
 }
 
-/** validate username */
+/** validar usuario */
 function usernameVerify(error = {}, values){
     if(!values.username){
         error.username = toast.error('Insira o usuário...!');
@@ -43,7 +43,7 @@ function usernameVerify(error = {}, values){
     return error;
 }
 
-/** validate reset password */
+/** validar reset senha */
 export async function resetPasswordValidation(values){
     const errors = passwordVerify({}, values);
 
@@ -54,7 +54,7 @@ export async function resetPasswordValidation(values){
     return errors;
 }
 
-/** validate register form */
+/** validar cadastro */
 export async function registerValidation(values){
     const errors = usernameVerify({}, values);
     passwordVerify(errors, values);
@@ -63,7 +63,7 @@ export async function registerValidation(values){
     return errors;
 }
 
-/** validate email */
+/** validar email */
 function emailVerify(error ={}, values){
     if(!values.email){
         error.email = toast.error("Insira o email...!");
@@ -76,7 +76,7 @@ function emailVerify(error ={}, values){
     return error;
 }
 
-/** validate profile page */
+/** validar perfil */
 export async function profileValidation(values){
     const errors = emailVerify({}, values);
     return errors;
