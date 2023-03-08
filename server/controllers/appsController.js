@@ -2,6 +2,7 @@ import UserModel from '../mongodb/models/User.model.js'
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import ENV from '../config.js';
+import otpGenerator from 'otp-generator';
 
 export async function verifyUser(req, res, next){
     try {
@@ -17,7 +18,6 @@ export async function verifyUser(req, res, next){
         return res.status(404).send({ error: "Erro de autenticação"});
     }
 }
-
 
 export async function register(req,res){
 
@@ -65,7 +65,7 @@ export async function register(req,res){
 
                         }).catch(error => {
                             return res.status(500).send({
-                                error : "Habilite para uma senha hash"
+                                error : "Habilite senha com hash"
                             })
                         })
                 }
@@ -80,7 +80,6 @@ export async function register(req,res){
 
 }
 
-
 export async function login(req,res){
    
     const { username, password } = req.body;
@@ -92,7 +91,7 @@ export async function login(req,res){
                 bcryptjs.compare(password, user.password)
                     .then(passwordCheck => {
 
-                        if(!passwordCheck) return res.status(400).send({ error: "Don't have Password"});
+                        if(!passwordCheck) return res.status(400).send({ error: "Senha inválida"});
 
                         // create jwt token
                         const token = jwt.sign({
@@ -108,15 +107,15 @@ export async function login(req,res){
 
                     })
                     .catch(error =>{
-                        return res.status(400).send({ error: "Password does not Match"})
+                        return res.status(400).send({ error: "A senha não bate"})
                     })
             })
             .catch( error => {
-                return res.status(404).send({ error : "Username not Found"});
+                return res.status(404).send({ error : "Usuário não encontrado"});
             })
 
     } catch (error) {
-        return res.status(500).send({ error});
+        return res.status(500).send({ error });
     }
 }
 
@@ -158,11 +157,11 @@ export async function updateUser(req,res){
             UserModel.updateOne({ _id : userId }, body, function(err, data){
                 if(err) throw err;
 
-                return res.status(201).send({ msg : "Record Updated...!"});
+                return res.status(201).send({ msg : "Informações atualizadas...!"});
             })
 
         }else{
-            return res.status(401).send({ error : "User Not Found...!"});
+            return res.status(401).send({ error : "Usuário não encontrado...!"});
         }
 
     } catch (error) {
@@ -170,21 +169,63 @@ export async function updateUser(req,res){
     }
 }
 
-
-
-
 export async function generateOTP(req,res) {
-    res.json('generateOTP route');
+    req.app.locals.OTP = await otpGenerator.generate(7, { lowerCaseAlphabets: false, upperCaseAlphabets: false, specialChars: false })
+    res.status(201).send({ code: req.app.locals.OTP })
 }
 
 export async function verifyOTP(req,res) {
-    res.json('verifyOTP route');
+    const { code } = req.query;
+    if(parseInt(req.app.locals.OTP) === parseInt(code)){
+        req.app.locals.OTP = null; // Resetar o valor da OTP
+        req.app.locals.resetSession = true; // Começar sessão para resetar senha
+        return res.status(201).send({ msg: "Verificado com sucesso!" })
+    }
+    return res.status(400).send({ error: "OTP inválida" });
 }
 
 export async function createResetSession(req,res) {
-    res.json('verifyOTP route');
+    if(req.app.locals.resetSession){
+        req.app.locals.resetSession = false; // Permitir o acesso a rota apenas uma vez
+        return res.status(201).send({ msg: "Acesso concedido" })
+    }
+    return res.status(440).send({ error: "Sessão expirada!" })
 }
 
 export async function resetPassword(req,res) {
-    res.json('resetPassword route');
+    try {
+        
+        if(!req.app.locals.resetSession)  return res.status(440).send({ error: "Sessão expirada!" });
+        
+        const { username, password } = req.body;
+
+        try {
+            
+            UserModel.findOne({ username })
+                .then(user => {
+                    bcryptjs.hash(password, 10)
+                        .then(hashedPassword => {
+                            UserModel.updateOne({ username : user.username },
+                            { password : hashedPassword }, function(err, data){
+                                if(err) throw err;
+                                req.app.locals.resetSession = false;
+                                return res.status(201).send({ msg: "Dados atualizados...!" })
+                            })
+                        })
+                        .catch(e => {
+                            return res.status(500).send({ error: "Habilitar senha com hash" })
+                        })
+                })
+                .catch(error => {
+                    return res.status(404).send({ error: "Usuário não encontrado" })
+                }
+            )
+                
+        } catch (error) {
+            return res.status(500).send({ error })
+        }
+
+    } catch (error) {
+        return res.status(401).send({ error })
+    }
 }
