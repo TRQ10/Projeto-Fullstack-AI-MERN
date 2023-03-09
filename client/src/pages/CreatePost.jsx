@@ -6,6 +6,7 @@ import axios from 'axios';
 import { preview } from '../assets';
 import { getRandomPrompt } from '../utils';
 import { FormField, Loader } from '../components';
+import toast from 'react-hot-toast';
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const CreatePost = () => {
       setGeneratingImg(false);
     })   
     } else {
-        alert('Por favor digite um prompt')
+        toast('Por favor digite um prompt');
     }
   }
 

@@ -43,7 +43,7 @@ export default function Recuperação() {
                     
                     <div className='input text-center'>
                       <span className='py-4 text-sm text-left text-gray-500'>
-                        Insira o código de 6 dígitos que foi enviado para o seu e-mail.
+                        Insira o código de 7 dígitos que foi enviado para o seu e-mail.
                       </span>
                       <input className={styles.textbox} type="number" placeholder='Código' />
                       </div>

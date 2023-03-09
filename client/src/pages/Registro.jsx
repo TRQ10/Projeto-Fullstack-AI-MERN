@@ -1,17 +1,20 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import avatar from "../assets/perfil.png";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { registerValidation } from "../helper/validate";
 import convertToBase64 from "../helper/convert";
 
 import styles from "../styles/Usuario.module.css";
+import { regiterUser } from "../helper/helper";
 
 export default function Registro() {
   const [file, setFile] = useState();
   const [passwordShown, setPasswordShown] = useState(false);
 
+
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       email: "eu@1.com",
@@ -23,7 +26,14 @@ export default function Registro() {
     validateOnChange: false,
     onSubmit: async (values) => {
       values = await Object.assign(values, { profile: file || "" });
-      console.log(values);
+      let registerPromise = regiterUser(values)
+      toast.promise(registerPromise, {
+        loading: "Criando...",
+        success: <b>Registrado com Sucesso...!</b>,
+        error : <b>Não foi possível registrar</b>
+      });
+
+      registerPromise.then(function(){ navigate('/usuario') })
     },
   });
 
@@ -83,7 +93,7 @@ export default function Registro() {
               />
               <div className="relative w-full">
                 <div className="absolute flex right-4 justify-center items-center ml-2 h-full">
-                  <button onClick={togglePassword}>
+                  <button onClick={togglePassword} type="button">
                     {" "}
                     <svg
                       className="w-6 h-6"
@@ -92,14 +102,14 @@ export default function Registro() {
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg">
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                     </svg>
                   </button>

@@ -15,6 +15,7 @@
 .textbox{
     @apply border-0 px-5 py-4 rounded-xl w-full shadow-sm text-lg;
     @apply focus:outline-none;
+    
 }
 
 .btn{
@@ -29,4 +30,14 @@
 
 input[type='file']{
     display: none;
+}
+
+.styleNone {
+    @layer {
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+      }
 }

@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import avatar from "../assets/perfil.png";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
 import { passwordValidate } from "../helper/validate";
 import useFetch from "../hooks/fetch.hook";
 import { useAuthStore } from "../store/store";
+import { verifyPassword } from "../helper/helper"
 
 import styles from "../styles/Usuario.module.css";
 
 export default function Senha() {
+
+  const navigate = useNavigate();
   const [passwordShown, setPasswordShown] = useState(false);
   const { username } = useAuthStore((state) => state.auth);
   const [{ isLoading, apiData, serverError }] = useFetch(`/user/${username}`);
@@ -20,13 +23,26 @@ export default function Senha() {
 
   const formik = useFormik({
     initialValues: {
-      password: "exemplo@123",
+      password: "",
     },
     validate: passwordValidate,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: async (values) => {
-      console.log(values);
+    onSubmit: async values => {
+      
+      let loginPromise = verifyPassword({ username, password : values.password })
+      toast.promise(loginPromise, {
+        loading: "Checking...",
+        success: <b>Logado Com Sucesso...!</b>,
+        error: <b>A Senha não bate...</b>
+      });
+
+      loginPromise.then(res => {
+        let { token } = res.data;
+        localStorage.setItem('token', token);
+        navigate('/perfil')
+      })
+
     },
   });
 
@@ -61,7 +77,7 @@ export default function Senha() {
             <div className="textbox flex flex-col items-center gap-6">
               <div className="relative">
                 <div className="absolute flex right-4 justify-center items-center ml-2 h-full">
-                  <button onClick={togglePassword}>
+                  <button onClick={togglePassword} type="button">
                     {" "}
                     <svg
                       className="w-6 h-6"
@@ -70,14 +86,14 @@ export default function Senha() {
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg">
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                       <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
                         d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                     </svg>
                   </button>
