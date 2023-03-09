@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 import { Loader, Card, FormField } from '../components';
 
@@ -28,22 +29,23 @@ const Home = () => {
       setLoading(true);
 
       try {
-        const response = await fetch('http://localhost:6969/api/v1/post', {
-          methos: 'GET',
+        const response = await axios({
+          method: 'GET',
+          url: 'http://localhost:6969/api/v1/post',
           headers: {
             'Content-Type': 'application/json',
           },
-        })
-
-        if(response.ok){
-          const result = await response.json();
-
+        });
+      
+        if (response.status === 200) {
+          const result = await response.data;
+      
           setAllPosts(result.data.reverse());
         }
       } catch (error) {
-        alert(error)
+        alert(error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
 

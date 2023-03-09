@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 
 import { preview } from '../assets';
 import { getRandomPrompt } from '../utils';
@@ -17,24 +19,19 @@ const CreatePost = () => {
 
   const generateImage = async () => {
     if(form.prompt) {
-      try {
-        setGeneratingImg(true);
-        const response = await fetch('http://localhost:6969/api/v1/dalle',{
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ prompt: form.prompt }),
-        });
-
-        const data = await response.json();
-
+      setGeneratingImg(true)
+      axios.post('http://localhost:6969/api/v1/dalle', { prompt: form.prompt }, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(async response => {
+        const data = await response.data;
         setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}`})
-      } catch (error) {
-          alert(error);
-      } finally {
-          setGeneratingImg(false);
-      }
+    }).catch(error => {
+      alert(error);
+    }).finally(() =>{
+      setGeneratingImg(false);
+    })   
     } else {
         alert('Por favor digite um prompt')
     }
@@ -46,15 +43,11 @@ const CreatePost = () => {
     if (form.prompt && form.photo) {
       setLoading(true);
       try {
-        const response = await fetch('http://localhost:6969/api/v1/post', {
-          method: 'POST',
+        await axios.post('http://localhost:6969/api/v1/post', { ...form }, {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ ...form }),
         });
-
-        await response.json();
         alert('Success');
         navigate('/');
       } catch (err) {

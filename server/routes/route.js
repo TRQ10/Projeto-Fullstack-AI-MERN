@@ -18,7 +18,7 @@ router.route('/login').post(controller.verifyUser,controller.login);
 // GET Methods
 router.route('/user/:username').get(controller.getUser)
 router.route('/generateOTP').get(controller.verifyUser, localVariables, controller.generateOTP)
-router.route('/verifyOTP').get(controller.verifyOTP)
+router.route('/verifyOTP').get(controller.verifyUser, controller.verifyOTP)
 router.route('/createResetSession').get(controller.createResetSession)
 
 // PUT Methods
