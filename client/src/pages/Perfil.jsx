@@ -18,9 +18,7 @@ export default function Perfil() {
       initialValues : {
         firstName: '',
         lastName: '',
-        email: 'eu@1.com',
-        mobile: 'exemplo123',
-        adress : 'exemplo@123'
+        email: '',
       },
       validate : profileValidation,
       validateOnBlur: false,
@@ -61,18 +59,15 @@ export default function Perfil() {
                     <input onChange={onUpload} type='file' id='profile' name='profile' />
                 </div>
   
-                <div className="textbox flex flex-col items-center gap-6">
-                    <div className='name flex w-3/4 gap-10'>
+                <div className="textbox flex flex-col flex-wrap items-center gap-6">
+                    <div className='name flex flex-col w-3/4 gap-10'>
                       <input {...formik.getFieldProps('firstName')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Nome' />
                       <input {...formik.getFieldProps('lastName')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Sobrenome' />
-                    </div>
-
-                    <div className='name flex w-3/4 gap-10'>
-                      <input {...formik.getFieldProps('mobile')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Celular' />
                       <input {...formik.getFieldProps('email')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Email' />
+
                     </div>
 
-                      <input {...formik.getFieldProps('adress')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Endereço' />
+
                       <button className={styles.btn} type='submit'>Editar perfil</button>
                     
 

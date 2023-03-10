@@ -7,6 +7,7 @@ import { preview } from '../assets';
 import { getRandomPrompt } from '../utils';
 import { FormField, Loader } from '../components';
 import toast from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 const CreatePost = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const CreatePost = () => {
   const [loading, setLoading] = useState(false);
 
   const generateImage = async () => {
+
     if(form.prompt) {
       setGeneratingImg(true)
       axios.post('http://localhost:6969/api/v1/dalle', { prompt: form.prompt }, {
@@ -34,9 +36,11 @@ const CreatePost = () => {
       setGeneratingImg(false);
     })   
     } else {
-        toast('Por favor digite um prompt');
+        toast.error('Por favor digite um prompt');
     }
   }
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,7 +53,7 @@ const CreatePost = () => {
             'Content-Type': 'application/json',
           },
         });
-        alert('Success');
+        toast.success('Successo');
         navigate('/');
       } catch (err) {
         alert(err);
@@ -57,7 +61,7 @@ const CreatePost = () => {
         setLoading(false);
       }
     } else {
-      alert('Please generate an image with proper details');
+      toast.error('Por favor dê mais detalhes sobre a imagem');
     }
   };
 
@@ -72,6 +76,8 @@ const CreatePost = () => {
 
   return (
     <section className='max-w-7xl mx-auto'>
+          <Toaster position="top-center" reverseOrder={false}></Toaster>
+
        <div>
         <h1 className='font-extrabold text-[#222328] 
         text-[32px]'>Criar</h1>
