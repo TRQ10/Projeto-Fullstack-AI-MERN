@@ -34,48 +34,46 @@ const Card = ({ _id, name, prompt, photo }) => {
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={fecharModal}
-              contentLabel="Modal de exemplo"
+              contentLabel="Modal"
               style={{
                 overlay: {
                   backgroundColor: 'rgba(0, 0, 0, 0.65)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
                   padding: '0',
-                  margin: '0',
-                  inset: 'none'
+                  margin: '0'
                 },
                 content: {
-                  backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                  overflow: 'hidden',
+                  backgroundColor: 'rgba(0, 0, 0, 0.65)',
                   border: 'none',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  margin: '20px',
-                  padding: '10px',
-                  height: 'auto'
+                  margin: '0',
+                  padding: '0',
+                  top: '0',
+                  left: '0',
+                  bottom: '0',
+                  right: '0',
+                  overflow: 'hidden'
                 }
               }
               }
             >
-              <div className='flex w-full justify-end justify-self-start'>
-                <i class='bx bx-x w-5 text-5xl mr-8 cursor-pointer' onClick={fecharModal}></i>
-              </div>
-              <div className='h-full flex items-center justify-center p-1 md:p-3 w-full'>
-                <div className='flex flex-col justify-between md:flex-row items-center md:justify-evenly md:gap-2 gap-10 w-full'>
-                  <div className='max-w-[350px] md:max-w-[400px] xl:max-w-[480px] 2xl:max-w-[700px]'>
-                    {/*Essa div aqui que tá mexendo com o tamanho da imagem nas telas*/}
-                    <img src={photo} className='w-auto h-[90%] rounded-md' />
+              <div className='bg-transparent w-full overflow-hidden rounded-none h-[100vh] fixed flex items-center justify-center flex-col'>
+    
+                  <div className='flex justify-end w-[80%] md:w-[90%] lg:w-[70%] rounded-t-lg bg-indigo-200'>
+                    <i class='bx bx-x w-5 text-5xl mr-8 cursor-pointer' onClick={fecharModal}></i>
                   </div>
-                  <div className='flex flex-col-reverse gap-10 items-center justify-center w-[40%]'>
-                    <p className="text-black text-[1em] md:text-[1.6em] prompt text-center">{prompt}</p>
-                    <div className="flex items-center gap-2 justify-center">
-                      <div className="w-7 h-7 rounded-full object-cover bg-green-700 flex justify-center items-center text-black text-xs font-bold">{name[0]}</div>
-                      <p className="text-black text-[15pt]">{name}</p>
+
+                  <div className='w-[80%] md:w-[90%] lg:w-[70%] flex justify-start items-center bg-indigo-400 rounded-b-lg flex-col md:flex-row p-3'>
+                    <img className="w-[70%] md:w-[60%] rounded-lg" src={photo} alt={prompt} />
+                    <div className='w-full flex justify-start flex-col-reverse p-2 lg:p-5 gap-6'>
+                      <p className="text-black text-[1.5em] lg:text-[2em] xl:text-[2.5em] prompt text-center">{prompt}</p>
+                      <div className="flex items-center gap-2 justify-center">
+                        <div className="w-7 h-7 md:w-9 md:h-9 lg:w-11 lg:h-11 xl:w-14 xl:h-14 rounded-full object-cover bg-green-700 flex justify-center items-center text-black text-xs md:text-lg lg:text-xl xl:text-2xl font-bold">{name[0]}</div>
+                        <p className="text-black text-[1.5em] lg:text-[2em] xl:text-[2.5em]">{name}</p>
+                      </div>
                     </div>
+
                   </div>
-                </div>
+
+                
               </div>
 
             </Modal>
