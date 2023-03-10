@@ -65,6 +65,7 @@ const Card = ({ _id, name, prompt, photo }) => {
               <div className='h-full flex items-center justify-center p-1 md:p-3 w-full'>
                 <div className='flex flex-col justify-between md:flex-row items-center md:justify-evenly md:gap-2 gap-10 w-full'>
                   <div className='max-w-[350px] md:max-w-[400px] xl:max-w-[480px] 2xl:max-w-[700px]'>
+                    {/*Essa div aqui que tá mexendo com o tamanho da imagem nas telas*/}
                     <img src={photo} className='w-auto h-[90%] rounded-md' />
                   </div>
                   <div className='flex flex-col-reverse gap-10 items-center justify-center w-[40%]'>
