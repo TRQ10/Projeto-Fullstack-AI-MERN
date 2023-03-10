@@ -83,13 +83,13 @@ export default function Registro() {
                 {...formik.getFieldProps("email")}
                 className={styles.textbox}
                 type="text"
-                placeholder="Email"
+                placeholder="Email*"
               />
               <input
                 {...formik.getFieldProps("username")}
                 className={styles.textbox}
                 type="text"
-                placeholder="Usuário"
+                placeholder="Usuário*"
               />
               <div className="relative w-full">
                 <div className="absolute flex right-4 justify-center items-center ml-2 h-full">
@@ -118,7 +118,7 @@ export default function Registro() {
                   {...formik.getFieldProps("password")}
                   className={styles.textbox}
                   type={passwordShown ? "text" : "password"}
-                  placeholder="Senha"
+                  placeholder="Senha*"
                 />
               </div>
               <button className={styles.btn} type="submit">

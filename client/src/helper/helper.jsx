@@ -1,8 +1,18 @@
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 /** Make API Requests */
+
+/** Get username from Token */
+
+export default function getUsername(){
+    const token = localStorage.getItem('token')
+    if(!token) return Promise.reject("Não foi possível encontrar o Token");
+    let decode = jwt_decode(token)
+    return decode
+}
 
 
 
@@ -61,11 +71,11 @@ export async function updateUser(response){
     try {
         
         const token = await localStorage.getItem('token');
-        const data = await axios.put('/api/v1/updateuser', response, { header : { "Autorização" : `Portador ${token}` }});
-        return Promise.resolve({ data })
+        const data = await axios.put('/api/v1/updateuser', response, { headers : { "Authorization" : `Bearer ${token}`}});
 
+        return Promise.resolve({ data })
     } catch (error) {
-        return Promise.reject({ error: "Não foi possível atualizar o seu perfil...!" })
+        return Promise.reject({ error : "Não foi possível atualizar...!"})
     }
 }
 
