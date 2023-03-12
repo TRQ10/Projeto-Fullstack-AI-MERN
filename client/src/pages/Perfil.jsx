@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Usuario.module.css';
 import extend from '../styles/Profile.module.css';
 import { updateUser } from '../helper/helper';
+import { Loader } from '../components';
 
 
 
@@ -52,13 +53,7 @@ export default function Perfil() {
       setFile(base64);
     }
 
-    // logout handler function
-    function userLogout(){
-      localStorage.removeItem('token');
-      navigate('/')
-    }
-
-    if (isLoading) return <h1 className="text-2xl font-bold">isLoading</h1>;
+    if (isLoading) return <div className="flex justify-center items-center pt-60"><Loader/></div>;
     if (serverError)
     return <h1 className="text-xl text-red-500">{serverError.message}</h1>;
 
@@ -80,7 +75,7 @@ export default function Perfil() {
             <form className='py-1' onSubmit={formik.handleSubmit}>
                 <div className='profile flex justify-center py-4'>
                     <label htmlFor='profile'>
-                      <img src={apiData?.profile ||  file || avatar} className={`${styles.profile_img} ${extend.profile_img}`} alt="avatar" />
+                      <img src={apiData?.profile || file || avatar} className={`${styles.profile_img} ${extend.profile_img}`} alt="avatar" />
                     </label>
 
                     <input onChange={onUpload} type='file' id='profile' name='profile' />
@@ -88,9 +83,9 @@ export default function Perfil() {
   
                 <div className="textbox flex flex-col justify-center items-center gap-6">
                     <div className='name flex justify-center flex-col w-full gap-10'>
-                      <input {...formik.getFieldProps('firstName')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Nome' />
-                      <input {...formik.getFieldProps('lastName')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Sobrenome' />
-                      <input {...formik.getFieldProps('email')} className={`${styles.textbox} ${extend.textbox}`} type="text" placeholder='Email' />
+                      <input {...formik.getFieldProps('firstName')} className={`${styles.textbox}`} type="text" placeholder='Nome' />
+                      <input {...formik.getFieldProps('lastName')} className={`${styles.textbox}`} type="text" placeholder='Sobrenome' />
+                      <input {...formik.getFieldProps('email')} className={`${styles.textbox}`} type="text" placeholder='Email' />
                     </div>
                       <button className={styles.btn}  type='submit'>Editar perfil</button>
                     
@@ -99,7 +94,7 @@ export default function Perfil() {
                 </div>
   
                 <div className="text-center py-4">
-                  <span className='text-gray-500'>Voltar depois? <button className='text-red-500' to="/" onClick={userLogout}>Sair</button></span>
+                  <span className='text-gray-500'>Voltar depois? </span>
                 </div>
   
             </form>

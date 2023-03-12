@@ -88,7 +88,7 @@ export async function generateOTP(username){
         if(status == 201){
             let { data : { email } } = await getUser({ username });
             let text = `Seu código para recuperar a senha é ${code}. Verifique e recupere a sua senha.`;
-            await axios.post('/api/v1/registerMail', { username, userEmail : email, text, subject : "OTP para recuperação de senha" })
+            await axios.post('/api/v1/registerMail', { username, userEmail : email, text, subject : "Código para recuperação de senha" })
         }  
         return Promise.resolve(code);
     } catch (error) {

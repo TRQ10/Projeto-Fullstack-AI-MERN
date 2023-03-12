@@ -6,12 +6,17 @@ import axios from 'axios';
 import { preview } from '../assets';
 import { getRandomPrompt } from '../utils';
 import { FormField, Loader } from '../components';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
+import { useAuthStore } from '../store/store';
 
 const CreatePost = () => {
+
+  const { username } = useAuthStore((state) => state.auth);
+  
+
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    name: "",
+    name: username,
     prompt: "",
     photo: "",
   });
@@ -29,12 +34,12 @@ const CreatePost = () => {
         const data = await response.data;
         setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}`})
     }).catch(error => {
-      alert(error);
+      toast.error(error);
     }).finally(() =>{
       setGeneratingImg(false);
     })   
     } else {
-        toast('Por favor digite um prompt');
+        toast.error('Por favor digite um prompt');
     }
   }
 
@@ -49,15 +54,15 @@ const CreatePost = () => {
             'Content-Type': 'application/json',
           },
         });
-        alert('Success');
+        toast.success('Success');
         navigate('/');
       } catch (err) {
-        alert(err);
+        toast.error(err);
       } finally {
         setLoading(false);
       }
     } else {
-      alert('Please generate an image with proper details');
+      toast.error('Por favor gere uma imagem com detalhes apropriados');
     }
   };
 
@@ -72,6 +77,7 @@ const CreatePost = () => {
 
   return (
     <section className='max-w-7xl mx-auto'>
+      <Toaster position='top-center' reverseOrder={false}></Toaster>
        <div>
         <h1 className='font-extrabold text-[#222328] 
         text-[32px]'>Criar</h1>
@@ -83,15 +89,6 @@ const CreatePost = () => {
 
       <form className="mt-16 max-w-3xl" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-5">
-          <FormField
-            labelName="Your Name"
-            type="text"
-            name="name"
-            placeholder="Ex., Dayse"
-            value={form.name}
-            handleChange={handleChange}
-          />
-
           <FormField
             labelName="Prompt"
             type="text"

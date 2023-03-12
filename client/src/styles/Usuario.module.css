@@ -13,9 +13,8 @@
 }
 
 .textbox{
-    @apply border-0 px-5 py-4 rounded-xl w-full shadow-sm text-lg;
-    @apply focus:outline-none;
-    
+    @apply border-0 px-5 py-4 rounded-xl shadow-sm text-lg z-0;
+    @apply focus:outline-none;   
 }
 
 .btn{

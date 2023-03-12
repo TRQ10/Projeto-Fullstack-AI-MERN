@@ -184,43 +184,43 @@ export async function verifyOTP(req,res) {
     return res.status(400).send({ error: "OTP inválida" });
 }
 
-export async function createResetSession(req,res) {
+export async function createResetSession(req,res){
     if(req.app.locals.resetSession){
-        req.app.locals.resetSession = false; // Permitir o acesso a rota apenas uma vez
-        return res.status(201).send({ msg: "Acesso concedido" })
+         return res.status(201).send({ flag : req.app.locals.resetSession})
     }
-    return res.status(440).send({ error: "Sessão expirada!" })
-}
+    return res.status(440).send({error : "Sessão expirada!"})
+ }
 
-export async function resetPassword(req,res) {
+export async function resetPassword(req,res){
     try {
         
-        if(!req.app.locals.resetSession)  return res.status(440).send({ error: "Sessão expirada!" });
-        
+        if(!req.app.locals.resetSession) return res.status(440).send({error : "Sessão expirada!"});
+
         const { username, password } = req.body;
 
         try {
             
-            UserModel.findOne({ username })
+            UserModel.findOne({ username})
                 .then(user => {
                     bcryptjs.hash(password, 10)
                         .then(hashedPassword => {
                             UserModel.updateOne({ username : user.username },
-                            { password : hashedPassword }, function(err, data){
+                            { password: hashedPassword}, function(err, data){
                                 if(err) throw err;
-                                req.app.locals.resetSession = false;
-                                return res.status(201).send({ msg: "Dados atualizados...!" })
-                            })
+                                req.app.locals.resetSession = false; // reset session
+                                return res.status(201).send({ msg : "Dados atualizados...!"})
+                            });
                         })
-                        .catch(e => {
-                            return res.status(500).send({ error: "Habilitar senha com hash" })
+                        .catch( e => {
+                            return res.status(500).send({
+                                error : "Ativar senha hashed"
+                            })
                         })
                 })
                 .catch(error => {
-                    return res.status(404).send({ error: "Usuário não encontrado" })
-                }
-            )
-                
+                    return res.status(404).send({ error : "Usuário não encontrado..."});
+                })
+
         } catch (error) {
             return res.status(500).send({ error })
         }

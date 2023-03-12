@@ -40,8 +40,8 @@ export const registerMail = async (req, res) => {
     var email = {
         body : {
             name: username,
-            intro : text || 'Welcome to Daily Tuition! We\'re very excited to have you on board.',
-            outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
+            intro : text || 'Bem vindo a DaiSy! Estamos bem animados por ter você abordo.',
+            outro: 'Precisa de ajuda, ou tem perguntas? Apenas responda esse email. adorariamos ajuda-lo!.'
         }
     }
 
@@ -50,14 +50,14 @@ export const registerMail = async (req, res) => {
     let message = {
         from : ENV.EMAIL,
         to: userEmail,
-        subject : subject || "Signup Successful",
+        subject : subject || "Cadastro bem sucessido",
         html : emailBody
     }
 
     // send mail
     transporter.sendMail(message)
         .then(() => {
-            return res.status(200).send({ msg: "You should receive an email from us."})
+            return res.status(200).send({ msg: "Você deve receber um email da gente."})
         })
         .catch(error => res.status(500).send({ error }))
 

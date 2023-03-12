@@ -9,13 +9,14 @@ import { useAuthStore } from "../store/store";
 import { verifyPassword } from "../helper/helper"
 
 import styles from "../styles/Usuario.module.css";
+import { Loader } from "../components";
 
 export default function Senha() {
 
   const navigate = useNavigate();
   const [passwordShown, setPasswordShown] = useState(false);
   const { username } = useAuthStore((state) => state.auth);
-  const [{ isLoading, apiData, serverError }] = useFetch(`/user/${username}`);
+  const [{ isLoading, apiData, serverError }] = useFetch(`user/${username}`);
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
@@ -40,13 +41,13 @@ export default function Senha() {
       loginPromise.then(res => {
         let { token } = res.data;
         localStorage.setItem('token', token);
-        navigate('/perfil')
+        navigate('/')
       })
 
     },
   });
 
-  if (isLoading) return <h1 className="text-2xl font-bold">isLoading</h1>;
+  if (isLoading) return <div className="flex justify-center items-center pt-60"><Loader/></div>;
   if (serverError)
     return <h1 className="text-xl text-red-500">{serverError.message}</h1>;
 
@@ -76,7 +77,7 @@ export default function Senha() {
 
             <div className="textbox flex flex-col items-center gap-6">
               <div className="relative">
-                <div className="absolute flex right-4 justify-center items-center ml-2 h-full">
+                <div className="absolute flex right-4 justify-center items-center ml-2 h-full z-30">
                   <button onClick={togglePassword} type="button">
                     {" "}
                     <svg
@@ -106,7 +107,7 @@ export default function Senha() {
                 />
               </div>
 
-              <button className={styles.btn} type="submit">
+              <button className={styles.btn} type="submit" >
                 Entrar
               </button>
             </div>

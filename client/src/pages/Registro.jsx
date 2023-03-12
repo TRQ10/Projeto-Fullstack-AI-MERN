@@ -91,7 +91,7 @@ export default function Registro() {
                 type="text"
                 placeholder="Usuário*"
               />
-              <div className="relative w-full">
+             <div className="relative">
                 <div className="absolute flex right-4 justify-center items-center ml-2 h-full">
                   <button onClick={togglePassword} type="button">
                     {" "}
@@ -118,7 +118,7 @@ export default function Registro() {
                   {...formik.getFieldProps("password")}
                   className={styles.textbox}
                   type={passwordShown ? "text" : "password"}
-                  placeholder="Senha*"
+                  placeholder="Senha"
                 />
               </div>
               <button className={styles.btn} type="submit">
