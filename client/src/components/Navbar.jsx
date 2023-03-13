@@ -4,13 +4,13 @@ import { logo } from "../assets";
 import avatar from "../assets/perfil.png";
 import useFetch from "../hooks/fetch.hook";
 import { useAuthStore } from "../store/store";
-import styles from '../styles/Usuario.module.css';
-import extend from '../styles/Profile.module.css';
-
+import styles from "../styles/Usuario.module.css";
+import extend from "../styles/Profile.module.css";
 
 export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const { username } = useAuthStore((state) => state.auth);
-  const [{ isLoading, apiData, serverError }] = useFetch(`user/${username}`);
+  const [{ apiData }] = useFetch(`user/${username}`);
+  const [profilePicture, setProfilePicture] = useState();
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -18,6 +18,7 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   // logout handler function
   function userLogout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("profilePicture")
     setIsLoggedIn(false); // set to false when logging out
     navigate("/");
   }
@@ -28,6 +29,22 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
       setIsLoggedIn(true);
     }
   }, [token]);
+
+  // After fetching the user data, update the profile picture URL in local storage and state
+  useEffect(() => {
+    if (apiData?.profile) {
+      localStorage.setItem("profilePicture", apiData.profile);
+      setProfilePicture(apiData.profile);
+    }
+  }, [apiData]);
+
+  // Load the profile picture URL from local storage on mount
+  useEffect(() => {
+    const storedProfilePicture = localStorage.getItem("profilePicture");
+    if (storedProfilePicture) {
+      setProfilePicture(storedProfilePicture);
+    }
+  }, []);
 
   return (
     <header className="w-full sticky top-0 z-30 flex justify-between items-center bg-white sm:px-8 px-4 py-4 border-b border-b-[#e6ebf4]">
@@ -41,21 +58,23 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             <button
               className="font-inter text-sm bg-[#ff6464] text-white px-4 py-2 rounded-md"
               to="/"
-              onClick={userLogout}>
+              onClick={userLogout}
+            >
               Logout
             </button>
             <Link
               to="/create-post"
-              className="font-inter text-sm bg-[#6469ff] text-white px-4 py-2 rounded-md flex justify-center items-center">
+              className="font-inter text-sm bg-[#6469ff] text-white px-4 py-2 rounded-md flex justify-center items-center"
+            >
               Create
             </Link>
             <Link to="/perfil">
               <div className="w-10 h-10 rounded-full">
-                  <img
-                    src={apiData?.profile ||  avatar}
-                    className={`${styles.profile_img} ${extend.profile_img}`}
-                    alt="avatar"
-                  />
+                <img
+                  src={profilePicture || avatar}
+                  className={`${styles.profile_img} ${extend.profile_img}`}
+                  alt="avatar"
+                />
               </div>
             </Link>
           </>
@@ -63,12 +82,14 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
           <>
             <Link
               to="/usuario"
-              className="font-inter font-medium bg-[#ff6464] text-white px-4 py-2 rounded-md">
+              className="font-inter font-medium bg-[#ff6464] text-white px-4 py-2 rounded-md"
+            >
               Login
             </Link>
             <Link
               to="/registro"
-              className="font-inter font-medium bg-[#ff6464] text-white px-4 py-2 rounded-md">
+              className="font-inter font-medium bg-[#ff6464] text-white px-4 py-2 rounded-md"
+            >
               Cadastro
             </Link>
           </>
