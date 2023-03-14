@@ -18,7 +18,7 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   // logout handler function
   function userLogout() {
     localStorage.removeItem("token");
-    localStorage.removeItem("profilePicture")
+    localStorage.removeItem("profilePicture");
     setIsLoggedIn(false); // set to false when logging out
     navigate("/");
   }
@@ -47,7 +47,7 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   }, []);
 
   return (
-    <header className="w-full sticky top-0 z-30 flex justify-between items-center bg-white sm:px-8 px-4 py-4 border-b border-b-[#e6ebf4]">
+    <header className="w-full sticky top-0 z-30 flex justify-between items-center bg-black border-b border-indigo-600 sm:px-8 px-4 py-4 backdrop-filter backdrop-blur-lg bg-opacity-40">
       <Link to="/">
         <img src={logo} alt="logo" className="w-28 object-contain" />
       </Link>
@@ -56,7 +56,7 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
         {isLoggedIn ? (
           <>
             <button
-              className="font-inter text-sm bg-[#ff6464] text-white px-4 py-2 rounded-md"
+              className="text-sm text-white px-4 py-2 rounded-md hover:text-[#8250e6]"
               to="/"
               onClick={userLogout}
             >
@@ -64,15 +64,15 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             </button>
             <Link
               to="/create-post"
-              className="font-inter text-sm bg-[#6469ff] text-white px-4 py-2 rounded-md flex justify-center items-center"
+              className="text-white bg-indigo-600 hover:bg-[#8250e6] font-medium mt-[5px] rounded-md text-sm sm:w-auto px-5 py-2.5 text-center"
             >
               Create
             </Link>
             <Link to="/perfil">
-              <div className="w-10 h-10 rounded-full">
+              <div className="rounded-full border-indigo-600 border-4">
                 <img
                   src={profilePicture || avatar}
-                  className={`${styles.profile_img} ${extend.profile_img}`}
+                  className="rounded-full h-[38px] w-[38px]"
                   alt="avatar"
                 />
               </div>
@@ -82,13 +82,13 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
           <>
             <Link
               to="/usuario"
-              className="font-inter font-medium bg-[#ff6464] text-white px-4 py-2 rounded-md"
+              className="font-medium text-white px-4 py-2 rounded-md hover:text-[#8250e6]"
             >
               Login
             </Link>
             <Link
               to="/registro"
-              className="font-inter font-medium bg-[#ff6464] text-white px-4 py-2 rounded-md"
+              className="text-white bg-[#442485] hover:bg-[#8250e6] font-medium rounded-md text-sm sm:w-auto px-5 py-2.5 text-center"
             >
               Cadastro
             </Link>
