@@ -5,16 +5,21 @@ import axios from "axios";
 import { preview } from "../assets";
 import { getRandomPrompt } from "../utils";
 import { FormField, Loader } from "../components";
+import { useAuthStore } from "../store/store";
+import toast, { Toaster } from "react-hot-toast";
 
 const CreatePost = () => {
+ 
+  const [generatingImg, setGeneratingImg] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { username } = useAuthStore((state) => state.auth);
+
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    name: "",
+    name: username,
     prompt: "",
     photo: "",
   });
-  const [generatingImg, setGeneratingImg] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const generateImage = async () => {
     if (form.prompt) {
@@ -40,7 +45,7 @@ const CreatePost = () => {
           setGeneratingImg(false);
         });
     } else {
-      alert("Por favor digite um prompt");
+      toast.error("Por favor digite um prompt");
     }
   };
 
@@ -67,7 +72,7 @@ const CreatePost = () => {
         setLoading(false);
       }
     } else {
-      alert("Please generate an image with proper details");
+      toast.error("Por favor gere uma mensagem com os detalhes apropriados");
     }
   };
 
@@ -82,6 +87,7 @@ const CreatePost = () => {
 
   return (
     <>
+    <Toaster position="top-center" reverseOrder={false}></Toaster>
       <section className="max-w-7xl mx-auto">
         <div>
           <h1
@@ -102,19 +108,8 @@ const CreatePost = () => {
           </p>
         </div>
 
-        <div className="flex flex-row lg:flex-col">
-          <div className="grid lg:grid-cols-2 grid-cols-1">
-            <div className="ml-6 lg:mt-[5px]">
-              <FormField
-                labelName="Preencha o nome"
-                type="text"
-                name="name"
-                placeholder="Ex.: Dayse"
-                value={form.name}
-                handleChange={handleChange}
-              />
-            </div>
-
+        <div className="flex flex-row lg:flex-col justify-center items-center">
+          <div className="grid lg:grid-cols-1 grid-cols-1">
             <div className="ml-5 lg:w-[38rem]">
               <FormField
                 labelName="Qual prompt deseja usar?"
@@ -166,6 +161,7 @@ const CreatePost = () => {
         <div className="mt-10">
           <button
             type="submit"
+            onClick={handleSubmit}
             className="mt-3 ml-[6.9rem]  lg:ml-[50rem] w-[10rem] text-white bg-indigo-600 hover:bg-[#8250e6] font-medium rounded-md text-sm sm:w-auto px-5 py-2.5 text-center"
           >
             {loading ? "Compartilhando..." : "Compartilhe com a comunidade!"}
