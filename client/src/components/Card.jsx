@@ -30,6 +30,9 @@ const Card = ({ _id, name, prompt, photo }) => {
               alt={prompt}
               onClick={abrirModal}
             />
+                
+                ////////////////////////////////////////*Começo do Modal*/////////////////////////////////////////////
+                
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={fecharModal}
@@ -66,7 +69,11 @@ const Card = ({ _id, name, prompt, photo }) => {
                     <div className='w-full flex justify-start flex-col-reverse p-2 lg:p-5 gap-6'>
                       <p className="text-white text-[1.5em] lg:text-[1.8em] xl:text-[2.2em] prompt text-center">{prompt}</p>
                       <div className="flex items-center gap-2 justify-center">
-                        <div className="w-7 h-7 md:w-9 md:h-9 lg:w-11 lg:h-11 xl:w-14 xl:h-14 rounded-full object-cover bg-[#8250e6] flex justify-center items-center text-white text-xs md:text-lg lg:text-xl xl:text-2xl font-bold">{name[0]}</div>
+                        <div className="w-7 h-7 md:w-9 md:h-9 lg:w-11 lg:h-11 xl:w-14 xl:h-14 rounded-full object-cover bg-[#8250e6] flex justify-center items-center text-white text-xs md:text-lg lg:text-xl xl:text-2xl font-bold">
+                          {name[0]}
+              /////////////////////////////*A imagem de perfil fica no lugar desse name[0] */////////////////////////////////
+                            
+                        </div>
                         <p className="text-white text-[1.5em] lg:text-[1.8em] xl:text-[2em]">{name}</p>
                       </div>
                     </div>
@@ -77,6 +84,10 @@ const Card = ({ _id, name, prompt, photo }) => {
               </div>
 
             </Modal>
+
+
+                               ////////////////////////////////////////*Fim do Modal*/////////////////////////////////////////////
+
             <div className="group-hover:flex items-center max-h-[94.5%] hidden absolute bottom-0 left-0 right-0 bg-[#10131f] m-2 p-4 rounded-md">
               <p className="text-white text-sm overflow-y-auto prompt">{prompt}</p>
             </div>
@@ -84,7 +95,12 @@ const Card = ({ _id, name, prompt, photo }) => {
         </div>
         <div className='bg-[#fefefe] rounded-b-xl h-[3rem] flex flex-row justify-between p-2 gap-2 items-center'>
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-full object-cover bg-[#5d20d3] flex justify-center items-center text-white text-xs font-bold">{name[0]}</div>
+            <div className="w-7 h-7 rounded-full object-cover bg-[#5d20d3] flex justify-center items-center text-white text-xs font-bold">
+              {name[0]}
+              
+              /////////////////////////////*A imagem de perfil fica no lugar desse name[0] */////////////////////////////////
+              
+            </div>
             <p className="text-black text-sm">{name}</p>
           </div>
           <button type="button" onClick={() => downloadImage(_id, photo)} className="outline-none bg-transparent border-none">
