@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { preview } from "../assets";
 import { getRandomPrompt } from "../utils";
 import { FormField, Loader } from "../components";
-import { useAuthStore } from "../store/store";
 import toast, { Toaster } from "react-hot-toast";
 
 const CreatePost = () => {
  
   const [generatingImg, setGeneratingImg] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { username } = useAuthStore((state) => state.auth);
+  const storedUsername = localStorage.getItem("username");
+  const storedProfilePicture = localStorage.getItem("profilePicture");
+
 
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    name: username,
+    name: storedUsername,
     prompt: "",
     photo: "",
+    profilePicture: storedProfilePicture,
   });
 
   const generateImage = async () => {

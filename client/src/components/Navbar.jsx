@@ -19,6 +19,7 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   function userLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("profilePicture");
+    localStorage.removeItem("username");
     setIsLoggedIn(false); // set to false when logging out
     navigate("/");
   }
@@ -29,6 +30,22 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
       setIsLoggedIn(true);
     }
   }, [token]);
+
+  // After fetching the user data, update the username in local storage and state
+  useEffect(() => {
+    if (apiData?.username) {
+      localStorage.setItem("username", apiData.username);
+    }
+  }, [apiData]);
+
+   // Load the username from local storage on mount
+   useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setProfilePicture(storedUsername);
+    }
+  }, []);
+
 
   // After fetching the user data, update the profile picture URL in local storage and state
   useEffect(() => {
