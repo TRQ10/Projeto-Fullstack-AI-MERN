@@ -79,7 +79,9 @@ const Card = ({ _id, name, prompt, photo, profilePicture }) => {
                       <div className="w-7 h-7 md:w-9 md:h-9 lg:w-11 lg:h-11 xl:w-14 xl:h-14 rounded-full object-cover bg-[#8250e6] flex justify-center items-center text-white text-xs md:text-lg lg:text-xl xl:text-2xl font-bold">
                         <img
                           src={profilePicture}
+
                           className="rounded-full h-[100%]"
+
                         />
                       </div>
                       <p className="text-white text-[1.5em] lg:text-[1.8em] xl:text-[2em]">
@@ -102,7 +104,9 @@ const Card = ({ _id, name, prompt, photo, profilePicture }) => {
             <div className="w-7 h-7 rounded-full object-cover flex justify-center items-center">
               <img
                 src={profilePicture}
+
                 className="rounded-full h-[100%]"
+
               />
             </div>
             <p className="text-black text-sm">{name}</p>

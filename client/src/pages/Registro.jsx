@@ -99,7 +99,9 @@ export default function Registro() {
                       {...formik.getFieldProps("email")}
                       className="bg-gray-50 border-2 border-indigo-600 text-[#8544ff] text-sm rounded-lg outline-none block w-full p-3"
                       type="text"
+
                       placeholder="Email"
+
                     />
                   </div>
 
@@ -108,7 +110,9 @@ export default function Registro() {
                       {...formik.getFieldProps("username")}
                       className="bg-gray-50 border-2 border-indigo-600 text-[#8544ff] text-sm rounded-lg outline-none block w-full p-3"
                       type="text"
+
                       placeholder="Usuário"
+
                     />
                   </div>
                   <div className="relative">

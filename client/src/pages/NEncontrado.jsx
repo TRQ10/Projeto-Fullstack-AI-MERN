@@ -13,5 +13,6 @@ export default function NEncontrado() {
       <img src={error} alt="error" className='lg:w-2/3 md:w-full h-auto  pt-0' />
       </div>
       </div>
+
   )
 }
