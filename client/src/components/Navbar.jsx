@@ -4,8 +4,7 @@ import { logo } from "../assets";
 import avatar from "../assets/perfil.png";
 import useFetch from "../hooks/fetch.hook";
 import { useAuthStore } from "../store/store";
-import styles from "../styles/Usuario.module.css";
-import extend from "../styles/Profile.module.css";
+import { daisy } from "../assets";
 
 export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const { username } = useAuthStore((state) => state.auth);
@@ -66,7 +65,7 @@ export const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <header className="w-full sticky top-0 z-30 flex justify-between items-center bg-black border-b border-indigo-600 sm:px-8 px-4 py-4 backdrop-filter backdrop-blur-lg bg-opacity-40">
       <Link to="/">
-        <img src={logo} alt="logo" className="w-28 object-contain" />
+        <img src={daisy} alt="logo" className="w-10 object-contain" />
       </Link>
 
       <div className="flex gap-2.5 item-center">
