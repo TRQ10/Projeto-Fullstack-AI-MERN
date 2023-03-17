@@ -111,8 +111,8 @@ const CreatePost = () => {
         </div>
 
         <div className="flex flex-row lg:flex-col justify-center items-center">
-          <div className="grid lg:grid-cols-1 grid-cols-1">
-            <div className="ml-5 lg:w-[38rem]">
+          <div className="flex justify-center items-center">
+            <div className="lg:w-[38rem]">
               <FormField
                 labelName="Qual prompt deseja usar?"
                 type="text"
@@ -127,7 +127,8 @@ const CreatePost = () => {
           </div>
         </div>
       </section>
-      <div className="relative lg:ml-[50rem] lg:mt-[5rem] ml-10 mt-10 bg-gray-50 border-2 border-indigo-600 text-gray-900 text-sm rounded-lg w-64 p-3 h-64 flex justify-center items-center">
+      <div className="w-full flex justify-center items-center">
+      <div className="relative lg:mt-[5rem] mt-10 bg-gray-50 border-2 border-indigo-600 text-gray-900 text-sm rounded-lg w-64 p-3 h-64 flex justify-center items-center">
         {form.photo ? (
           <img
             src={form.photo}
@@ -148,25 +149,25 @@ const CreatePost = () => {
           </div>
         )}
       </div>
-
-      <div className="flex flex-col">
-        <div className="mt-5">
+      </div>
+      <div className="flex flex-col justify-center items-center">
+        <div className="mt-5 flex justify-center items-center">
           <button
             type="button"
             onClick={generateImage}
-            className="mt-3 ml-[6.9rem] lg:mt-[32px] lg:ml-[55rem] w-[10rem] text-white bg-indigo-600 hover:bg-[#8250e6] font-medium rounded-md text-sm sm:w-auto px-5 py-2.5 text-center"
+            className="mt-3 lg:mt-[32px] w-[10rem] text-white bg-indigo-600 hover:bg-[#8250e6] font-medium rounded-md text-sm sm:w-auto px-5 py-2.5 text-center"
           >
             {generatingImg ? "Gerando..." : "Gerar"}
           </button>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-10 flex justify-center items-center">
           <button
             type="submit"
             onClick={handleSubmit}
-            className="mt-3 ml-[6.9rem]  lg:ml-[50rem] w-[10rem] text-white bg-indigo-600 hover:bg-[#8250e6] font-medium rounded-md text-sm sm:w-auto px-5 py-2.5 text-center"
+            className="mt-3 w-[10rem] text-white bg-indigo-600 hover:bg-[#8250e6] font-medium rounded-md text-sm sm:w-auto px-5 py-2.5 text-center"
           >
-            {loading ? "Compartilhando..." : "Compartilhe com a comunidade!"}
+            {loading ? "Compartilhando..." : "Compartilhe!"}
           </button>
         </div>
       </div>
