@@ -1,5 +1,5 @@
 import React from "react";
-import { logo } from "../assets";
+import { daisy } from "../assets";
 
 function Footer() {
   return (
@@ -7,7 +7,7 @@ function Footer() {
       <footer className="p-4 rounded-lg md:px-6 md:py-8 lg:ml-[10rem] lg:w-[100rem]">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div className="flex items-center mb-4 sm:mb-0">
-            <img className="w-[6rem]" src={logo} alt="" />
+            <img className="w-[2.5rem]" src={daisy} alt="" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap text-white"></span>
           </div>
           <div className="flex flex-row gap-4">
