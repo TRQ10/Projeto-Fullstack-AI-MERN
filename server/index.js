@@ -10,8 +10,6 @@ import router from './routes/route.js'
 
 dotenv.config();
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
