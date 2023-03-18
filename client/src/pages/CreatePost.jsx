@@ -28,7 +28,7 @@ const CreatePost = () => {
       setGeneratingImg(true);
       axios
         .post(
-          "https://backend-api-8faw.onrender.com/api/v1/dalle",
+          "http://localhost:3000/api/v1/dalle",
           { prompt: form.prompt },
           {
             headers: {
@@ -58,7 +58,7 @@ const CreatePost = () => {
       setLoading(true);
       try {
         await axios.post(
-          "https://backend-api-8faw.onrender.com/api/v1/post",
+          "https://http://localhost:3000/api/v1/post",
           { ...form },
           {
             headers: {
