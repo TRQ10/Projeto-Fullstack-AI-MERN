@@ -242,3 +242,22 @@ export async function getAllUsers(req, res) {
             res.status(500).json({ success: false, message: error });
         }
 }
+
+export async function deleteUser(req, res) {
+    try {
+      const { username } = req.params;
+  
+      // check if the user exists
+      let exist = await UserModel.findOne({ username });
+      if (!exist) {
+        return res.status(404).send({ error: "User not found" });
+      }
+  
+      // delete the user
+      await UserModel.deleteOne({ username });
+  
+      return res.status(200).send({ msg: "User deleted successfully" });
+    } catch (error) {
+      return res.status(500).send({ error });
+    }
+  }
