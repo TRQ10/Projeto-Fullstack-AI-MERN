@@ -31,8 +31,8 @@ const Home = () => {
       setLoading(true);
 
       try {
-        const response = await fetch('https://backend-api-8faw.onrender.com/api/v1/post', {
-          methos: 'GET',
+        const response = await fetch('https:localhost:3000/api/v1/post', {
+          methods: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
