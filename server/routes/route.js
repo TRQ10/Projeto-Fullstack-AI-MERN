@@ -26,4 +26,7 @@ router.route('/createResetSession').get(controller.createResetSession)
 router.route('/updateuser').put(Auth, controller.updateUser);
 router.route('/resetPassword').put(controller.verifyUser, controller.resetPassword);
 
+// DELETE Methods
+router.route('/user/:username').delete(controller.deleteUser);
+
 export default router;
