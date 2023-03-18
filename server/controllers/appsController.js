@@ -2,6 +2,7 @@ import UserModel from '../mongodb/models/User.model.js'
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import otpGenerator from 'otp-generator';
+import AllUsers from '../mongodb/models/User.model.js'
 
 const jwt_secret = process.env.JWT_SECRET
 
@@ -230,4 +231,14 @@ export async function resetPassword(req,res){
     } catch (error) {
         return res.status(401).send({ error })
     }
+}
+
+export async function getAllUsers(req, res) {   
+        try {
+            const allUsers = await AllUsers.find({})
+    
+            res.status(200).json({ success: true, data: allUsers });
+        } catch (error) {
+            res.status(500).json({ success: false, message: error });
+        }
 }
