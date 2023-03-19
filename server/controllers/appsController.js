@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import otpGenerator from 'otp-generator';
 import AllUsers from '../mongodb/models/User.model.js'
 
+
 const jwt_secret = process.env.JWT_SECRET
 
 
@@ -25,7 +26,7 @@ export async function verifyUser(req, res, next){
 export async function register(req,res){
 
     try {
-        const { username, password, profile, email } = req.body;        
+        const { username, password, profile, email, isAdmin } = req.body;        
 
         // check the existing user
         const existUsername = new Promise((resolve, reject) => {
@@ -58,7 +59,8 @@ export async function register(req,res){
                                 username,
                                 password: hashedPassword,
                                 profile: profile || '',
-                                email
+                                email,
+                                isAdmin: isAdmin || false
                             });
 
                             // return save result as a response

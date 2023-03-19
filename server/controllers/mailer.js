@@ -53,7 +53,7 @@ export const registerMail = async (req, res) => {
     var emailBody = MailGenerator.generate(email);
 
     let message = {
-        from : ENV.EMAIL,
+        from : EMAIL,
         to: userEmail,
         subject : subject || "Cadastro bem sucessido",
         html : emailBody
