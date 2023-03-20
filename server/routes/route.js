@@ -6,7 +6,7 @@ const router = Router();
 
 import * as controller from '../controllers/appsController.js'
 import { registerMail } from "../controllers/mailer.js"
-import Auth, { localVariables, isAdmin } from "../middleware/auth.js"
+import Auth, { localVariables } from "../middleware/auth.js"
 
 
 
@@ -28,6 +28,6 @@ router.route('/updateuser').put(Auth, controller.updateUser);
 router.route('/resetPassword').put(controller.verifyUser, controller.resetPassword);
 
 // DELETE Methods
-router.route('/user/:username').delete(isAdmin, controller.deleteUser);
+router.route('/user/:username').delete(controller.deleteUser);
 
 export default router;
