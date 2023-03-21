@@ -1,6 +1,6 @@
 <h1>:blossom:	Projeto em grupo módulo 5</h1>
 
-<img src=""></img>
+<img src="https://github.com/TRQ10/Projeto-Fullstack-AI-MERN/blob/main/client/src/assets/home.png">
 <p>dAIsy é uma pequena plataforma de rede social que permite criar uma conta, fazer login e atualizar seu perfil. Você também pode criar suas próprias imagens usando a API DALL-E da OpenAI em nosso site e compartilhá-las com a comunidade.</p>
 
 <h2>:computer: Começando</h2>
